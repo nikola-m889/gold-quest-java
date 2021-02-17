@@ -3,11 +3,18 @@ package story;
 import chars_weapons.Bandit;
 import chars_weapons.Bow;
 import chars_weapons.Dagger;
+import chars_weapons.EnchantDagger;
+import chars_weapons.EnchantStaff;
+import chars_weapons.EnchantSword;
 import chars_weapons.Enemy;
+import chars_weapons.Legendary_Sword;
 import chars_weapons.LocCurrent;
+import chars_weapons.LocKey;
 import chars_weapons.MagicStaff;
 import chars_weapons.Mudcrab;
 import chars_weapons.Rat;
+import chars_weapons.Skeleton;
+import chars_weapons.Skeleton_Guardian;
 import chars_weapons.Sword;
 import chars_weapons.Unarmed;
 
@@ -20,12 +27,19 @@ public class Location {
 	Hero hero=new Hero(); //player
 	Enemy enemy; //Super monster
 	LocCurrent a = new LocCurrent();
+	LocKey l = new LocKey();
 
 	
 	String heroClass;
 	public int goldenRelic;
 	public int key=0;
+	public int bossKey=0;
 	public int healthPotion=0;
+	boolean armorLight=false;
+	boolean armorHeavy=false;
+	boolean bossDefeated=false;
+	boolean InCastle=false;
+	
 
 	
 	public Location(Main main, Display display, SetMenu menu, Location2 level2) {
@@ -94,6 +108,7 @@ public class Location {
 		
 		case "back":
 			startArea();
+			InCastle=false;
 			break;
 		
 		case "camp":
@@ -105,7 +120,7 @@ public class Location {
 			break;
 			
 		case "ruins":
-			Ruins();
+			try {Ruins();}catch(Exception e) {}
 			break;
 			
 		case "fight":
@@ -136,7 +151,90 @@ public class Location {
 			location2.startArea2();
 			break;
 			
+		case "backToGame":
+			menuC.gameScreen();
+			startArea();
+			break;
+		
+		case "backToCastleL1":
+			Castle();
+			break;
 			
+		case "north":
+			North();
+			break;
+			
+		case "east":
+			East();
+			break;
+			
+		case "west":
+			West();
+		break;
+			
+		case "buyDagger":
+			hero.equipedWeapon = new EnchantDagger();
+			if(hero.gold >= 30) {
+				hero.gold = hero.gold - 30;
+				disp.statusGoldNum.setText(""+hero.gold);
+				disp.statusWeaponName.setText(hero.equipedWeapon.weaponName);
+			}
+			break;
+			
+		case "buySword":
+			hero.equipedWeapon = new EnchantSword();
+			if(hero.gold >= 50) {
+				hero.gold = hero.gold - 50;
+				disp.statusGoldNum.setText(""+hero.gold);
+				disp.statusWeaponName.setText(hero.equipedWeapon.weaponName);
+			}	
+			break;
+			
+		case "buyStaff":
+			hero.equipedWeapon = new EnchantStaff();
+			if(hero.gold >= 70) {
+				hero.gold = hero.gold - 70;
+				disp.statusGoldNum.setText(""+hero.gold);
+				disp.statusWeaponName.setText(hero.equipedWeapon.weaponName);
+			}
+			break;
+			
+		case "buyPotion":
+			if(hero.gold>=10) {
+			hero.hp=hero.hp+20;
+			hero.gold=hero.gold-10;
+			disp.statusHealthNum.setText(""+hero.hp);
+			disp.statusGoldNum.setText(""+hero.gold);
+			}
+			break;
+			
+		case "buyLightArmor":
+			if(hero.gold>=50 && armorLight==false) {
+			armorLight=true;
+			if(armorHeavy==true) {
+				armorHeavy=false;
+				hero.hp=hero.hp-120;
+			}
+			hero.hp=hero.hp+70;
+			hero.gold=hero.gold-50;
+			disp.statusHealthNum.setText(""+hero.hp);
+			disp.statusGoldNum.setText(""+hero.gold);
+			}
+			break;
+		
+		case "buyHeavyArmor":
+			if(hero.gold>=70 && armorHeavy==false) {
+				armorHeavy=true;
+				if(armorLight==true) {
+					armorLight=false;
+					hero.hp=hero.hp-70;
+				}
+				hero.hp=hero.hp+120;
+				hero.gold=hero.gold-70;
+				disp.statusHealthNum.setText(""+hero.hp);
+				disp.statusGoldNum.setText(""+hero.gold);
+			}
+			break;
 			
 		}
 	}
@@ -190,7 +288,7 @@ public class Location {
 	}
 	
 	public void searchKey() {
-		disp.gameText.setText("After closely observing the area, you have come to conclusion that this type of door can be opened by pressing secret plate. \n Maybe you should go back and search area near door");
+		disp.gameText.setText("After closely observing the area, you have come to conclusion that this type of door can be opened by pressing a secret plate. \n Maybe you should go back and search area near the door");
 		disp.option1.setText("Go back to the door");
 		disp.option2.setText("");
 		disp.option3.setText("");
@@ -205,22 +303,40 @@ public class Location {
 	}
 	
 	public void Camp() {
-		disp.gameText.setText("After resting in your camp your health increased by 4");
-		hero.hp=hero.hp+4;
+		menuC.storeScreen();
 		disp.statusHealthNum.setText(""+hero.hp);
-		disp.option1.setText("Go back");
+		disp.option1.setText("");
 		disp.option2.setText("");
 		disp.option3.setText("");
 		disp.option4.setText("");
-		disp.option5.setText("");
+		disp.option5.setText("Go back");
 		
-		mainC.place1="back";
+		disp.storeButton1.setText("Buy");
+		disp.storeButton2.setText("Buy");
+		disp.storeButton3.setText("Buy");
+		disp.storeButton4.setText("Buy");
+		disp.storeButton5.setText("Buy");
+		disp.storeButton6.setText("Buy");
+		
+		mainC.store1="buyDagger";
+		mainC.store2="buySword";
+		mainC.store3="buyStaff";
+		mainC.store4="buyPotion";
+		mainC.store5="buyLightArmor";
+		mainC.store6="buyHeavyArmor";
+		
+		mainC.place1="";
+		mainC.place2="";
+		mainC.place3="";
+		mainC.place4="";
+		mainC.place5="backToGame";
 	
 	}
 	
 	public void Ruins() {
 		
 		int opponentChoice = new java.util.Random().nextInt(10);
+		
 		if(opponentChoice<=3) {
 			enemy = new Rat();
 		}
@@ -244,7 +360,12 @@ public class Location {
 		mainC.place2="";
 		mainC.place3="";
 		mainC.place4="";
-		mainC.place5="back";
+		if(InCastle==true) {
+			mainC.place5="backToCastleL1";
+		}else if(InCastle==false) {
+			mainC.place5="back";
+		}
+		
 	}
 	
 	public void Battle() {
@@ -259,7 +380,11 @@ public class Location {
 		mainC.place2="";
 		mainC.place3="";
 		mainC.place4="";
-		mainC.place5="back";
+		if(InCastle==true) {
+			mainC.place5="backToCastleL1";
+		}else if(InCastle==false) {
+			mainC.place5="back";
+		}
 	}
 	
 	public void Attack() {
@@ -295,6 +420,8 @@ public class Location {
 		disp.option5.setText("");
 		
 		if(hero.hp<=0) {
+			hero.hp=0;
+			disp.statusHealthNum.setText(""+hero.hp);
 			mainC.place1="defeated";
 		}
 		else if(hero.hp>=0) {
@@ -304,12 +431,21 @@ public class Location {
 		mainC.place2="";
 		mainC.place3="";
 		mainC.place4="";
-		mainC.place5="back";
+		if(InCastle==true) {
+			mainC.place5="backToCastleL1";
+		}else if(InCastle==false) {
+			mainC.place5="back";
+		}
 	}
 	
 	public void Victorius() {
 		int goldChance = new java.util.Random().nextInt(50);
 		disp.gameText.setText("You are victorius against the fight with "+enemy.enemyName+"\n Enemy dropped "+goldChance+" gold");
+		if(enemy.enemyName=="Skeleton Guardian") {
+			disp.gameText.setText("Guardian dropped "+goldChance+" gold "+"and the key needed to unlock treasure room in the level above");
+			bossKey=1;
+			l.setKey(1);
+		}
 		hero.gold=hero.gold+goldChance;
 		disp.statusGoldNum.setText(""+hero.gold);
 		hero.experienceTotal=hero.experienceTotal+50;
@@ -330,7 +466,11 @@ public class Location {
 		disp.option4.setText("");
 		disp.option5.setText("");
 		
-		mainC.place1="back";
+		if(InCastle==true) {
+			mainC.place1="backToCastleL1";
+		}else if(InCastle==false) {
+			mainC.place1="back";
+		}
 		mainC.place2="";
 		mainC.place3="";
 		mainC.place4="";
@@ -338,7 +478,8 @@ public class Location {
 	}
 	
 	public void Lost() {
-		disp.gameText.setText("You have been defeated by "+enemy.enemyName);
+		disp.statusHealthNum.setText(""+hero.hp);
+		disp.gameText.setText("You have been defeated by a "+enemy.enemyName);
 		disp.option1.setText("Go back to the start menu");
 		mainC.place1="startMenu";
 	}
@@ -366,7 +507,8 @@ public class Location {
 	}
 	
 	public void Castle() {
-		disp.gameText.setText("You entered inside castle.");
+		InCastle=true;
+		disp.gameText.setText("You are inside the castle.");
 		disp.option1.setText("Go north");
 		disp.option2.setText("Go east");
 		disp.option3.setText("Go south(exit)");
@@ -380,6 +522,64 @@ public class Location {
 		mainC.place5="climbLevel2";
 	}
 	
+	public void North() {
+		disp.gameText.setText("You found small health potion, restoring your health by 5");
+		hero.hp=hero.hp+5;
+		disp.statusHealthNum.setText(""+hero.hp);
+		disp.option1.setText("");
+		disp.option2.setText("");
+		disp.option3.setText("");
+		disp.option4.setText("");
+		disp.option5.setText("go back to previous room");
+		
+		mainC.place1="";
+		mainC.place2="";
+		mainC.place3="";
+		mainC.place4="";
+		mainC.place5="backToCastleL1";
+	}
+	
+	public void East() {
+		int castleEnemyChance = new java.util.Random().nextInt(10);
+		if(castleEnemyChance<=5) {
+			enemy = new Skeleton();
+		}
+		else if(castleEnemyChance>=6 && bossKey==0) {
+			enemy = new Skeleton_Guardian();
+		}
+			
+		disp.gameText.setText("Exploring the eastern part of the castle you are attacked by "+enemy.enemyName);
+		disp.option1.setText("Attack");
+		disp.option2.setText("");
+		disp.option3.setText("");
+		disp.option4.setText("");
+		disp.option5.setText("Escape");
+		
+		mainC.place1="attack";
+		mainC.place2="";
+		mainC.place3="";
+		mainC.place4="";
+		mainC.place5="backToCastleL1";
+	}
+	
+	public void West() {
+		disp.gameText.setText("Exploring the western part of the castle you have found a legendary sword");
+		hero.equipedWeapon= new Legendary_Sword();
+		disp.statusWeaponName.setText(hero.equipedWeapon.weaponName);
+		disp.option1.setText("");
+		disp.option2.setText("");
+		disp.option3.setText("");
+		disp.option4.setText("");
+		disp.option5.setText("go back");
+		
+		mainC.place1="";
+		mainC.place2="";
+		mainC.place3="";
+		mainC.place4="";
+		mainC.place5="backToCastleL1";
+	}
+	
+
 
 	
 	

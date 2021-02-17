@@ -143,6 +143,7 @@ public class Main {
 	Location location = new Location(this,display,menu,location2);
 	Hero hero = new Hero();
 	String place1,place2,place3,place4,place5;
+	String store1,store2,store3,store4,store5,store6;
 	LocCurrent a = new LocCurrent();
 
 	
@@ -171,6 +172,12 @@ public class Main {
 				case "three": location.chosenOption(place3); break;
 				case "four": location.chosenOption(place4); break;
 				case "five": location.chosenOption(place5); break;
+				case "item1": location.chosenOption(store1);break;
+				case "item2": location.chosenOption(store2);break;
+				case "item3": location.chosenOption(store3);break;
+				case "item4": location.chosenOption(store4);break;
+				case "item5": location.chosenOption(store5);break;
+				case "item6": location.chosenOption(store6);break;
 				}
 			}else if(a.level==2) {
 				switch(selectedOption) {
@@ -181,10 +188,7 @@ public class Main {
 				case "five": location.Castle(); a.level=1;break;
 				}
 			}
-	
-	
-			
 		}
 	}
-
+	
 }

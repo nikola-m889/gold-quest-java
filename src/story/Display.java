@@ -181,9 +181,9 @@ import story.Main.Option;
 public class Display {
 
 	JFrame window;
-	JPanel questName,questPanel, statusPanel, statusPanel2, gameTextPanel, optionPanel;
-	JLabel questTitle,statusHealth,statusHealthNum,statusWeapon,statusWeaponName,statusClass,statusClassName, statusLevel, statusLevelNum,statusExp,statusExpNum,statusGold,statusGoldNum;
-	JButton questActivate,option1,option2,option3,option4,option5;
+	JPanel questName,questPanel, statusPanel, statusPanel2, gameTextPanel, optionPanel,weaponsPanel,itemsPanel,optionWeapons,optionWeapons2, optionItems;
+	JLabel questTitle,statusHealth,statusHealthNum,statusWeapon,statusWeaponName,statusClass,statusClassName, statusLevel, statusLevelNum,statusExp,statusExpNum,statusGold,statusGoldNum,weaponsTitle,weaponsSword,weaponsDagger,weaponsStaff,itemsTitle,itemsPotion,itemsArmor1,itemsArmor2;
+	JButton questActivate,option1,option2,option3,option4,option5,storeButton1,storeButton2,storeButton3,storeButton4,storeButton5,storeButton6;
 	JTextArea gameText;
 	Font titleFont = new Font("Times New Roman",Font.PLAIN,80);
 	Font menuFont = new Font("Times New Roman",Font.PLAIN,26);
@@ -353,6 +353,129 @@ public class Display {
 		option5.setForeground(Color.orange);
 		option5.setFocusPainted(false);
 		optionPanel.add(option5);
+		
+		//store
+		
+		weaponsPanel = new JPanel();
+		weaponsPanel.setBounds(10,95,250,200);
+		weaponsPanel.setBackground(Color.black);
+		weaponsPanel.setLayout(new GridLayout(4,1));
+		window.add(weaponsPanel);
+		
+		weaponsTitle = new JLabel("Weapons:");
+		weaponsTitle.setFont(optionFont);
+		weaponsTitle.setForeground(Color.orange);
+		weaponsPanel.add(weaponsTitle);
+		
+		weaponsDagger = new JLabel("Enchanted Dagger(30 gold)");
+		weaponsDagger.setFont(optionFont);
+		weaponsDagger.setForeground(Color.orange);
+		weaponsPanel.add(weaponsDagger);
+		weaponsSword = new JLabel("Enchanted Sword(50 gold)");
+		weaponsSword.setFont(optionFont);
+		weaponsSword.setForeground(Color.orange);
+		weaponsPanel.add(weaponsSword);
+		weaponsStaff = new JLabel("Enchanted Staff(70 gold)");
+		weaponsStaff.setFont(optionFont);
+		weaponsStaff.setForeground(Color.orange);
+		weaponsPanel.add(weaponsStaff);
+		
+		optionWeapons = new JPanel();
+		optionWeapons.setBounds(300,105,70,190);
+		optionWeapons.setBackground(Color.black);
+		optionWeapons.setLayout(new GridLayout(3,1));
+		window.add(optionWeapons);
+		
+		
+		
+		storeButton1 = new JButton("");
+		storeButton1.setFont(optionFont);
+		storeButton1.addActionListener(option);
+		storeButton1.setActionCommand("item1");
+		storeButton1.setBackground(Color.black);
+		storeButton1.setForeground(Color.orange);
+		storeButton1.setFocusPainted(false);
+		optionWeapons.add(storeButton1);
+		
+		storeButton2 = new JButton("");
+		storeButton2.setFont(optionFont);
+		storeButton2.addActionListener(option);
+		storeButton2.setActionCommand("item2");
+		storeButton2.setBackground(Color.black);
+		storeButton2.setForeground(Color.orange);
+		storeButton2.setFocusPainted(false);
+		optionWeapons.add(storeButton2);
+		
+		storeButton3 = new JButton("");
+		storeButton3.setFont(optionFont);
+		storeButton3.addActionListener(option);
+		storeButton3.setActionCommand("item3");
+		storeButton3.setBackground(Color.black);
+		storeButton3.setForeground(Color.orange);
+		storeButton3.setFocusPainted(false);
+		optionWeapons.add(storeButton3);
+		
+		// store second column
+		
+		itemsPanel = new JPanel();
+		itemsPanel.setBounds(390,95,250,190);
+		itemsPanel.setBackground(Color.black);
+		itemsPanel.setLayout(new GridLayout(4,1));
+		window.add(itemsPanel);
+		
+		itemsTitle = new JLabel("Items:");
+		itemsTitle.setFont(optionFont);
+		itemsTitle.setForeground(Color.orange);
+		itemsPanel.add(itemsTitle);
+		
+		itemsPotion = new JLabel("Health Potion (10gold)");
+		itemsPotion.setFont(optionFont);
+		itemsPotion.setForeground(Color.orange);
+		itemsPanel.add(itemsPotion);
+		
+		itemsArmor1 = new JLabel("Light Armor (50gold)");
+		itemsArmor1.setFont(optionFont);
+		itemsArmor1.setForeground(Color.orange);
+		itemsPanel.add(itemsArmor1);
+		
+		itemsArmor2 = new JLabel("Heavy Armor (70gold");
+		itemsArmor2.setFont(optionFont);
+		itemsArmor2.setForeground(Color.orange);
+		itemsPanel.add(itemsArmor2);
+		
+		optionItems = new JPanel();
+		optionItems.setBounds(650,105,70,190);
+		optionItems.setBackground(Color.black);
+		optionItems.setLayout(new GridLayout(3,1));
+		window.add(optionItems);
+		
+		
+		storeButton4 = new JButton("");
+		storeButton4.setFont(optionFont);
+		storeButton4.addActionListener(option);
+		storeButton4.setActionCommand("item4");
+		storeButton4.setBackground(Color.black);
+		storeButton4.setForeground(Color.orange);
+		storeButton4.setFocusPainted(false);
+		optionItems.add(storeButton4);
+		
+		storeButton5 = new JButton("");
+		storeButton5.setFont(optionFont);
+		storeButton5.addActionListener(option);
+		storeButton5.setActionCommand("item5");
+		storeButton5.setBackground(Color.black);
+		storeButton5.setForeground(Color.orange);
+		storeButton5.setFocusPainted(false);
+		optionItems.add(storeButton5);
+		
+		storeButton6 = new JButton("");
+		storeButton6.setFont(optionFont);
+		storeButton6.addActionListener(option);
+		storeButton6.setActionCommand("item6");
+		storeButton6.setBackground(Color.black);
+		storeButton6.setForeground(Color.orange);
+		storeButton6.setFocusPainted(false);
+		optionItems.add(storeButton6);
 		
 		
 		window.setVisible(true);
