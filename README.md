@@ -1,1 +1,1 @@
-<h1>Gold Quest</h1> 
+<h1 align="center">Gold Quest</h1> 
